@@ -1,0 +1,23 @@
+<view style="height: 20px;"></view>
+<form catchsubmit="formSubmit">
+  <view class="search" style="display: flex;align-items: center;">
+    <navigator url="/pages/search/search" open-type="redirect" style="width: 100rpx;text-align: center;background-color: #ffffff;height: 40px;line-height: 40px;border-radius: 20px;">
+      <text decode="true">&lt;-</text>
+    </navigator>
+    <input type="text" name="search" id="search" value="{{search}}" style="text-align: center;background-color: white;height: 40px;flex: 1;border-radius: 20px;" bindtap="toSearch" />
+  </view>
+</form>
+<view style="height: 20px;"></view>
+<view class="content" style="display: flex;flex-direction: column;align-items: center;">
+  <view style="display: flex;justify-content: center;align-items: center;background-color: rgb(240, 249, 246);width: 90vw;flex-wrap: wrap;margin-bottom: 20px;" wx:for="{{result}}" wx:key="{{item.id}}">
+    <image url="{{item.img}}" style="background-color: rgb(88, 140, 126);height: 66rpx;width: 66rpx;border-radius: 33rpx;"></image>
+    <view style="display: flex;flex-direction: column;text-align: center;">
+      <text>{{item.aName}}</text>
+      <text>{{item.time}}</text>
+    </view>
+    <button style="background-color: rgb(88, 140, 126);height: 66rpx;width: 100rpx;border-radius: 0rpx;font-size: 30rpx;margin: 0;padding: 0">
+      Join
+    </button>
+    <view>{{item.introduce}}</view>
+  </view>
+</view>
