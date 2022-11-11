@@ -1,0 +1,15 @@
+<view style="height: 20px;"></view>
+<view class="search" style="display: flex;align-items: center;">
+  <navigator url="/pages/index/index" open-type="redirect" style="width: 100rpx;text-align: center;background-color: #ffffff;height: 40px;line-height: 40px;border-radius: 20px;">
+    <text decode="true">&lt;-</text>
+  </navigator>
+  <input type="text" name="search" id="search" value="{{search}}" style="text-align: center;background-color: white;height: 40px;flex: 1;border-radius: 20px;" bindinput='getInputValue' />
+  <button bindtap="toSearch_result" style="width: 60px;height: 40px;padding: 0;margin: 0;line-height: 40px;border-radius: 40px;">搜索</button>
+</view>
+
+<view style="height: 20px;"></view>
+<view style="margin-left: 20px;">猜你喜欢</view>
+<view style="height: 10px;"></view>
+<view style="display: flex;flex-wrap: wrap;justify-content:space-around;">
+  <view bindtap="favor_tap" wx:for="{{favor}}" style="font-size: 20px;width: 40vw;height:40px;line-height: 40px;border-radius: 20px;text-align: center;margin-bottom: 10px;background-color: white;" data-value="{{item}}">{{item}}</view>
+</view>
