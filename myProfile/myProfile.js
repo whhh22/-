@@ -10,55 +10,36 @@ Page({
     src: '',
     nickName: '',
     intro: '...',
-    mytag_sport: [],
-    mytag_food: [],
-    mytag_entertain: [],
-    now_state:null,
+    // mytag_sport: [],
+    // mytag_food: [],
+    // mytag_entertain: [],
+    mytag: [[], [], []],
+    now_state: null,
     tag: [
       {value: 'sport', name: '运动'},
       {value: 'food', name: '吃喝'},
       {value: 'entertain', name: '娱乐'}
     ],
-    tag_sport: [
-      {value: 'badminton', name: '羽毛球'}, {value: 'basketball', name: '篮球'}, {value: 'table tennis', name: '乒乓球'}, {value: 'running', name: '跑步'}, {value: 'volleyball', name: '排球'}, {value: 'fitness', name: '健身'}, {value: 'football', name: '足球'}
-    ],
-    tag_food: [
-      {value: 'barbecue', name: '烧烤'}, {value: 'malatang', name: '麻辣烫'}, {value: 'drinks', name: '饮品'}, {value: 'hot pot', name: '火锅'}, {value: 'Japanese cuisine', name: '日料'}, {value: 'Sichuan Cuisine', name: '川菜'}, {value: 'fried chicken', name: '炸鸡'}
-    ],
-    tag_entertain: [
-      {value: 'games', name: '游戏'}, {value: 'movie', name: '电影'}, {value: 'script_murder', name: '剧本杀'}, {value: 'board_games', name: '桌游'}, {value: 'KTV', name: 'KTV'}, {value: 'room_escape', name: '密室逃脱'}, {value: 'live house', name: 'live house'}
-    ]
-  },
-
-  getName: function(e) {
-    this.setData({
-      name: e.detail.value
-    })
-    console.log("昵称为： ", this.data.name)
-  },
-
-  getIntro: function(e) {
-    this.setData({
-      intro: e.detail.value
-    })
-    console.log("简介为： ", this.data.intro)
-  },
-
-  chooseTag: function(e) {
-    this.setData({
-      mytag: e.detail.value
-    })
-    console.log("标签为： ", this.data.mytag)
+    small_tag: [[{value: 'badminton', name: '羽毛球'}, {value: 'basketball', name: '篮球'}, {value: 'table tennis', name: '乒乓球'}, {value: 'running', name: '跑步'}, {value: 'fitness', name: '健身'},{value: 'volleyball', name: '排球'}, {value: 'football', name: '足球'},  {value: 'tennis', name: '网球'}, {value: 'swimming', name: '游泳'}], 
+    [{value: 'barbecue', name: '烧烤'}, {value: 'malatang', name: '麻辣烫'}, {value: 'milk tea', name: '奶茶'}, {value: 'hot pot', name: '火锅'}, {value: 'coffee', name: '咖啡'}, {value: 'Japanese cuisine', name: '日料'}, {value: 'Sichuan Cuisine', name: '川菜'}, {value: 'snack', name: '小吃'}, {value: 'fried chicken', name: '炸鸡'}, {value: 'buffet', name: '自助餐'}], 
+    [{value: 'movie', name: '电影'}, {value: 'The script to kill', name: '剧本杀'}, {value: 'role-playing games', name: '桌游'}, {value: 'KTV', name: 'KTV'}, {value: 'Secret room escape', name: '密室逃脱'}, {value: 'live house', name: 'live house'}, {value: 'shopping', name: '逛街'}]]
   },
 
   // 弹窗事件相关
   popWindow(e){
+    let tag = this.data.tag;
+    let i = 0;
+    for (let i = 0, len = tag.length; i < len; ++ i) {
+      tag[i].checked = false;
+    }
+    this.setData({
+      tag
+    })
     var that = this 
     that.setData({
       now_state:true
     })
     console.log(that.data.now_state);
- 
   },
   //点击黑色背景触发的事件
   hideModal(e){
@@ -89,69 +70,54 @@ Page({
   //选择标签事件
   radioChange_tag(e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
-    const tag = this.data.tag
-    for (let i = 0, len = tag.length; i < len; ++i) {
-      tag[i].checked = tag[i].value === e.detail.value
+    let tag = this.data.tag;
+    for (let i= 0, len = tag.length; i < len; ++ i) {
+      tag[i].checked = false;
     }
     this.setData({
       tag
     })
+    let i = 0;
+    for (let len = tag.length; i < len; ++i) {
+      // tag[i].checked = tag[i].value === e.detail.value
+      if (tag[i].name === e.detail.value) break;
+    }
+    const mytag = this.data.mytag;
+    let small_tag = this.data.small_tag;
+    for (let j = 0, len2 = small_tag[i].length; j < len2; j++) {
+      small_tag[i][j].checked = false;
+    }
+    for (let j = 0, len2 = mytag[i].length; j < len2; j++) {
+      for (let k = 0, len3 = small_tag[i].length; k < len3; k++) {
+        if (small_tag[i][k].name == mytag[i][j]) {
+          small_tag[i][k].checked = true;
+          console.log(small_tag[i][k]);
+          break;
+        }  
+      }
+    }
+    
+    tag[i].checked = true;
+    this.setData({
+      tag,
+      small_tag
+    })
+    console.log(this.data.tag, this.data.small_tag);
   },
 
-  checkboxChange_tag_sport(e) {
+  checkboxChange(e) {
+    // console.log(e.currentTarget.dataset.big);
     console.log('radio发生change事件，携带value值为：', e.detail.value);
+    const big = e.currentTarget.dataset.big;
     const value = e.detail.value;
-    let mytag_sport = [];
-    const tag_sport = this.data.tag_sport;
-    for (let i = 0, len = value.length; i < len; ++i) {
-      for (let j = 0, len2 = tag_sport.length; j < len2; ++j) {
-        if (value[i] == tag_sport[j].value) {
-          mytag_sport.push(tag_sport[j].name);
-          break;
-        }
-        else continue;
-      }
-    }
+    let mytag = this.data.mytag;
+    mytag[big] = value
     this.setData({
-      mytag_sport
+      mytag
     })
+    console.log(mytag);
   },
-  checkboxChange_tag_food(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value);
-    const value = e.detail.value;
-    let mytag_food = [];
-    const tag_food = this.data.tag_food;
-    for (let i = 0, len = value.length; i < len; ++i) {
-      for (let j = 0, len2 = tag_food.length; j < len2; ++j) {
-        if (value[i] == tag_food[j].value) {
-          mytag_food.push(tag_food[j].name);
-          break;
-        }
-        else continue;
-      }
-    }
-    this.setData({
-      mytag_food
-    })
-  },
-  checkboxChange_tag_entertain(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value);
-    const value = e.detail.value;
-    let mytag_entertain = [];
-    const tag_entertain = this.data.tag_entertain;
-    for (let i = 0, len = value.length; i < len; ++i) {
-      for (let j = 0, len2 = tag_entertain.length; j < len2; ++j) {
-        if (value[i] == tag_entertain[j].value) {
-          mytag_entertain.push(tag_entertain[j].name);
-          break;
-        }
-        else continue;
-      }
-    }
-    this.setData({
-      mytag_entertain
-    })
-  },
+  
   getMyInfor: function() {
     wx.getUserProfile({
       desc: '获取用户信息',

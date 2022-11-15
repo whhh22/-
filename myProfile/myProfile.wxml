@@ -4,10 +4,9 @@
   <view class="head">
     <image src="{{src}}"></image>
   </view>
-  <view class="editpencil">
-    <image src="../bianji.png"></image>
-  </view>
 </view>
+
+<view class="getinfor" bindtap="getMyInfor">获取微信头像昵称</view>
 
 <view class="black">
   昵称
@@ -19,7 +18,14 @@
 <view class="black">
   性别
   <view class="editvalue">
-    <input placeholder="sex" bindinput="getSex"></input>
+    <radio-group bindchange="radioChange_tag" name="big_tag" style="position: relative;left: -16px;top: -6px;">
+      <label>
+        <radio value="1" />
+        <text decode="true">男&nbsp;</text>
+        <radio value="0" />
+        <text decode="true">女&nbsp;</text>
+      </label>
+    </radio-group>
   </view>
 </view>
 
@@ -30,11 +36,12 @@
   </view>
 </view>
 
-<view class="showtag">
-  我的标签
+<view class="">
+  <view style="display: inline-block;height: 40rpx;line-height: 40rpx;margin:10px 15px;color: #487267;font-weight: bold;">我的标签</view>
+  <view bindtap="popWindow" style="display: inline-block;height: 40rpx;width: 40rpx;box-sizing: border-box;line-height: 40rpx;text-align: center;background-color: #588c7e;color: #f0f9f6;border-radius: 50%;">+</view>
 </view>
 <view class="tagblack">
-  <view class="tag" wx:for="{{mytag_sport}}">
+  <!-- <view class="tag" wx:for="{{mytag_sport}}">
     {{item}}
   </view>
   <view class="tag" wx:for="{{mytag_food}}">
@@ -42,8 +49,11 @@
   </view>
   <view class="tag" wx:for="{{mytag_entertain}}">
     {{item}}
-  </view>
-  <view class="tag" style="position: absolute; left: 650rpx; top: 720rpx;" type="primary" bindtap="popWindow">+</view>
+  </view> -->
+  <block wx:for="{{mytag}}" wx:key="index">
+    <view class="tag" wx:for="{{item}}" wx:for-item="item2" wx:key="item2.index">{{item2}}</view>
+  </block>
+  
 </view>
 
 <view type="primary" bindtap="popWindow">{{item}}</view>
@@ -53,41 +63,22 @@
   <!--弹窗内部内容-->
   <view class="bigtag"> 
     <radio-group bindchange="radioChange_tag" style="flex: 1;padding-left: 30rpx;" name="big_tag">
-        <label wx:for="{{tag}}" wx:key="{{tag.value}}">
-            <radio value="{{item.value}}"/>
+        <label wx:for="{{tag}}" wx:key="{{tag.value}}" >
+            <radio value="{{item.name}}" color="#588c7e" checked="{{item.checked}}"/>
             <text decode="true">{{item.name}}&nbsp;</text>
         </label>
     </radio-group>
   </view>
 
-  <view wx:if="{{tag[0].checked}}" class="smalltag">
-    <checkbox-group  bindchange="checkboxChange_tag_sport" style="flex: 1;padding-left: 30rpx;" name="small_tag">
-        <label wx:for="{{tag_sport}}" wx:key="{{tag_sport.value}}">
-            <radio value="{{item.value}}"/>
-            <text decode="true" style="margin-right:10rpx">{{item.name}}&nbsp;</text>
-        </label>
+  <view wx:for="{{small_tag}}" wx:if="{{tag[index].checked}}" class="smalltag">
+    <checkbox-group bindchange="checkboxChange" style="flex: 1;padding-left: 30rpx;" name="small_tag" data-big="{{index}}">
+      <label wx:for="{{item}}" wx:key="{{index}}" wx:for-item="item2">
+        <checkbox value="{{item2.name}}" color="#588c7e" checked="{{item2.checked}}" />
+        <text decode="true" style="margin-right:10rpx">{{item2.name}}&nbsp;</text>
+      </label>
     </checkbox-group>
   </view>
 
-  <view wx:if="{{tag[1].checked}}" class="smalltag">
-    <checkbox-group  bindchange="checkboxChange_tag_food" style="flex: 1;padding-left: 30rpx;" name="small_tag">
-        <label wx:for="{{tag_food}}" wx:key="{{tag_food.value}}">
-            <radio value="{{item.value}}"/>
-            <text decode="true" style="margin-right:10rpx">{{item.name}}&nbsp;</text>
-        </label>
-    </checkbox-group>
-  </view>
-
-  <view wx:if="{{tag[2].checked}}" class="smalltag">
-    <checkbox-group  bindchange="checkboxChange_tag_entertain" style="flex: 1;padding-left: 30rpx;" name="small_tag">
-        <label wx:for="{{tag_entertain}}" wx:key="{{tag_entertain.value}}">
-            <radio value="{{item.value}}"/>
-            <text decode="true" style="margin-right:10rpx">{{item.name}}&nbsp;</text>
-        </label>
-    </checkbox-group>
-  </view>
-
-  <view class="confirm" bindtap="hideModal">确认</view>
+  <view class="confirm" bindtap="hideModal" style="position: fixed;bottom:10rpx;left: 50%;transform: translateX(-50%);">确认</view>
 
 </view>
-<button wx:if="{{!hasUserInfo}}" bindtap="getMyInfor">点击获取用户信息</button>
