@@ -36,24 +36,20 @@
 }
 
 .black {
+  width: 100vw;
   height: 80rpx;
-  margin-bottom: 20rpx;
-  background-color: #f0f9f6;
-  line-height: 80rpx;
-  border-radius: 3px;
   margin-bottom: 10px;
-  font-size: 14px;
+  display: flex;
+  background-color: #f0f9f6;
+  align-items: center;
+  font-size: 15px;
   color: #487267;
-  text-indent: 15px;
 }
 
 .editvalue {
-  display: inline-block;
-  position: relative;
-  left: 40px;
-  top: 6px;
-  text-align: left;
-  font-size: 15px;
+  margin-left: 35rpx;
+  font-size: 14px;
+  margin-right: 150rpx;
 }
 
 /* 标签相关 */
@@ -118,10 +114,10 @@
   /*隐藏溢出*/
   position: absolute;
   width: 90%;
-  height: 250px;
+  height: 480rpx;
   /*以当前页面为参考物，进行页面的固定*/
   left: 5%;
-  top: 250rpx;
+  top: 30%;
   /*4个定点中一个定点的确认*/
   z-index: 2000;
   /*堆叠顺序*/
@@ -135,7 +131,7 @@
 
 .bigtag {
   margin-bottom: 40rpx;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   color: #487267;
 }
@@ -149,7 +145,7 @@
 /* 弹窗确认 */
 .confirm {
   margin: 30px auto;
-  width: 150px;
+  width: 40%;
   height: 80rpx;
   background-color: #588c7e;
   line-height: 80rpx;
